@@ -13,13 +13,21 @@ androidx-test-junit = "1.1.5"
 compose-plugin = "1.6.10"
 junit = "4.13.2"
 kotlin = "2.0.0"
+coroutines = "1.8.1"
 ktor = "2.3.11"
 logback = "1.5.6"
+serialization = "1.6.3"
+detekt = "1.23.6"
+koin = "3.5.6"
+exposed = "0.50.1"
+postgresql = "42.7.3"
+bcrypt = "0.4"
+mockk = "1.13.11"
+h2 = "2.2.224"
+flyway = "10.13.0"
+hikari = "5.1.0"
 
 [libraries]
-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
-kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
 androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-junit" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-espresso-core" }
@@ -27,10 +35,87 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+
+kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
+
+# SERIALIZATION
+kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
+
+# KOIN
+koin-ktor = { group = "io.insert-koin", name = "koin-ktor", version.ref = "koin" }
+koin-logger = { group = "io.insert-koin", name = "koin-logger-slf4j", version.ref = "koin" }
+
+# TEST
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
+koin-test-junit = { group = "io.insert-koin", name = "koin-test-junit4", version.ref = "koin" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+
+# SERVER
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
 ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor" }
+ktor-server-cio-jvm = { group = "io.ktor", name = "ktor-server-cio-jvm" }
 ktor-server-tests = { module = "io.ktor:ktor-server-tests-jvm", version.ref = "ktor" }
+ktor-server-host-common-jvm = { group = "io.ktor", name = "ktor-server-host-common-jvm" }
+ktor-server-status-pages-jvm = { group = "io.ktor", name = "ktor-server-status-pages-jvm" }
+ktor-server-openapi = { group = "io.ktor", name = "ktor-server-openapi" }
+ktor-server-swagger-jvm = { group = "io.ktor", name = "ktor-server-swagger-jvm" }
+ktor-server-call-logging-jvm = { group = "io.ktor", name = "ktor-server-call-logging-jvm" }
+ktor-server-content-negotiation-jvm = { group = "io.ktor", name = "ktor-server-content-negotiation-jvm" }
+ktor-serialization-kotlinx-json-jvm = { group = "io.ktor", name = "ktor-serialization-kotlinx-json-jvm" }
+ktor-server-auth = { group = "io.ktor", name = "ktor-server-auth" }
+ktor-server-auth-jwt = { group = "io.ktor", name = "ktor-server-auth-jwt" }
+
+# MIGRATIONS
+flyway = { group = "org.flywaydb", name = "flyway-core", version.ref = "flyway" }
+flyway-postgresql = { group = "org.flywaydb", name = "flyway-database-postgresql", version.ref = "flyway" }
+
+# PERSISTENCE
+exposed-core = { group = "org.jetbrains.exposed", name = "exposed-core", version.ref = "exposed" }
+exposed-jdbc = { group = "org.jetbrains.exposed", name = "exposed-jdbc", version.ref = "exposed" }
+hikari = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikari" }
+
+exposed-java-time = { group = "org.jetbrains.exposed", name = "exposed-java-time", version.ref = "exposed" }
+postgresql = { group = "org.postgresql", name = "postgresql", version.ref = "postgresql" }
+h2 = { group = "com.h2database", name = "h2", version.ref = "h2" }
+
+# CRYPTOGRAPHY
+bcrypt = { group = "org.mindrot", name = "jbcrypt", version.ref = "bcrypt" }
+
+[bundles]
+ktor-server = [
+    "ktor-server-core",
+    "ktor-server-host-common-jvm",
+    "ktor-server-status-pages-jvm",
+    "ktor-server-openapi",
+    "ktor-server-swagger-jvm",
+    "ktor-server-call-logging-jvm",
+    "ktor-server-content-negotiation-jvm",
+    "ktor-serialization-kotlinx-json-jvm",
+    "ktor-server-cio-jvm",
+    "ktor-server-auth",
+    "ktor-server-auth-jwt",
+]
+
+koin-server = [
+    "koin-ktor",
+    "koin-logger",
+]
+
+persistence = [
+    "exposed-core",
+    "exposed-jdbc",
+    "exposed-java-time",
+    "postgresql",
+    "hikari",
+    "flyway",
+    "flyway-postgresql",
+]
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -40,3 +125,6 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+flyway = { id = "org.flywaydb.flyway", version.ref = "flyway" }
