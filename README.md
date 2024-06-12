@@ -38,13 +38,13 @@ about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform
 
 |   | Server                    |
 |---|---------------------------|
-| ❎ | Food                      |
-| ❎ | Food Journal              |
-| ❎ | Overview                  |
-| ❎ | Users                     |
-| ❎ | Security                  |
+| ✅ | Food                      |
+| ✅ | Food Journal              |
+| ✅ | Overview                  |
+| ✅ | Users                     |
+| ✅ | Security                  |
 | ❎ | Profile                   |
-| ❎ | Weight                    |
+| ✅ | Weight                    |
 | ❎ | Caloric intake management |
 
 ## Improvements
