@@ -26,6 +26,7 @@ dependencies {
     implementation(libs.bcrypt)
     implementation(libs.kotlinx.serialization)
     implementation(libs.kotlinx.coroutines)
+    implementation(libs.kotlinx.datetime)
 
     detektPlugins(libs.detekt.formatting)
 
