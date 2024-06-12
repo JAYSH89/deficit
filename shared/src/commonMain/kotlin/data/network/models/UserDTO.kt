@@ -3,6 +3,7 @@ package data.network.models
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import models.user.User
+import models.user.UserProfile
 
 @Serializable
 data class UserRequest(
@@ -38,6 +39,12 @@ data class UserResponse(
         fun fromUser(user: User): UserResponse = UserResponse(
             id = user.id,
             email = user.email,
+        )
+
+        fun fromUser(user: User, userProfile: UserProfile?) = UserResponse(
+            id = user.id,
+            email = user.email,
+            profile = userProfile?.let { UserProfileResponse.fromUserProfile(userProfile = it) },
         )
     }
 }

@@ -23,7 +23,7 @@ object FoodTable : UUIDTable(name = "food") {
     val proteins: Column<Double> = double(name = "proteins")
     val fats: Column<Double> = double(name = "fats")
     val amount: Column<Double> = double(name = "amount")
-    val amountType: Column<String> = ProfileTable.varchar(name = "amount_type", length = 50)
+    val amountType: Column<String> = varchar(name = "amount_type", length = 50)
     val createdAt: Column<LocalDateTime?> = datetime(name = "created_at").nullable()
     val updatedAt: Column<LocalDateTime?> = datetime(name = "updated_at").nullable()
 

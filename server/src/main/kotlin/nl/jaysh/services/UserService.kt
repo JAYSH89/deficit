@@ -28,16 +28,20 @@ class UserService(
         )
     }
 
-    fun updateUser(user: User): User {
-        return userRepository.update(user = user)
+    fun updateUser(user: User): UserResponse {
+        val updatedUser = userRepository.update(user = user)
+        val profile = profileRepository.findById(userId = UUID.fromString(updatedUser.id))
+
+        return UserResponse.fromUser(user = updatedUser, userProfile = profile)
     }
 
     fun deleteUser(userId: UUID) {
         userRepository.delete(userId = userId)
     }
 
-    fun saveProfile(profile: UserProfile, userId: UUID): UserProfile {
-        return profileRepository.save(profile = profile, userId = userId)
+    fun saveProfile(profile: UserProfile, userId: UUID): UserProfileResponse {
+        val newProfile = profileRepository.save(profile = profile, userId = userId)
+        return UserProfileResponse.fromUserProfile(userProfile = newProfile)
     }
 
     fun deleteProfile(userId: UUID) {

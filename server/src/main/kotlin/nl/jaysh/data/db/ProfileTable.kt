@@ -24,7 +24,7 @@ object ProfileTable : Table(name = "profile") {
     val dateOfBirth: Column<LocalDateTime> = datetime(name = "date_of_birth")
     val height: Column<Double> = double(name = "height")
     val gender: Column<String> = varchar(name = "gender", length = 50)
-    val activityFactor: Column<String> = varchar(name = "gender", length = 50)
+    val activityFactor: Column<String> = varchar(name = "activity_factor", length = 50)
 
     val user: Column<EntityID<UUID>> = reference(
         name = "user_id",

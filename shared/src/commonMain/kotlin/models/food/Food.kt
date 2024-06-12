@@ -3,7 +3,7 @@ package models.food
 import models.AmountType
 
 data class Food(
-    val id: String,
+    val id: String? = null,
     val name: String,
     val carbs: Double,
     val proteins: Double,

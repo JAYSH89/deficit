@@ -68,7 +68,7 @@ ktor-server-openapi = { group = "io.ktor", name = "ktor-server-openapi" }
 ktor-server-swagger-jvm = { group = "io.ktor", name = "ktor-server-swagger-jvm" }
 ktor-server-call-logging-jvm = { group = "io.ktor", name = "ktor-server-call-logging-jvm" }
 ktor-server-content-negotiation-jvm = { group = "io.ktor", name = "ktor-server-content-negotiation-jvm" }
-#ktor-serialization-kotlinx-json-jvm = { group = "io.ktor", name = "ktor-serialization-kotlinx-json-jvm" }
+ktor-serialization-kotlinx-json-jvm = { group = "io.ktor", name = "ktor-serialization-kotlinx-json-jvm" }
 ktor-server-auth = { group = "io.ktor", name = "ktor-server-auth" }
 ktor-server-auth-jwt = { group = "io.ktor", name = "ktor-server-auth-jwt" }
 
@@ -97,6 +97,7 @@ ktor-server = [
     "ktor-server-swagger-jvm",
     "ktor-server-call-logging-jvm",
     "ktor-server-content-negotiation-jvm",
+    "ktor-serialization-kotlinx-json-jvm",
     "ktor-server-cio-jvm",
     "ktor-server-auth",
     "ktor-server-auth-jwt",

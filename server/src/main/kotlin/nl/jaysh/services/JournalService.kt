@@ -1,6 +1,8 @@
 package nl.jaysh.services
 
 import data.network.models.JournalEntryRequest
+import data.network.models.JournalEntryResponse
+import data.network.models.JournalSummaryResponse
 import models.journal.JournalEntry
 import models.journal.JournalSummary
 import nl.jaysh.data.repository.FoodRepository
@@ -12,25 +14,23 @@ class JournalService(
     private val journalRepository: JournalRepository,
     private val foodRepository: FoodRepository,
 ) {
-    fun getAllJournalEntries(userId: UUID): List<JournalEntry> {
-        return journalRepository.getAll(userId = userId)
-    }
+    fun getAllJournalEntries(userId: UUID): List<JournalEntryResponse> = journalRepository
+        .getAll(userId = userId)
+        .map { JournalEntryResponse.fromJournalEntry(it) }
 
-    fun findById(journalEntryId: UUID, userId: UUID): JournalEntry? {
-        return journalRepository.findById(journalEntryId = journalEntryId, userId = userId)
-    }
+    fun findById(journalEntryId: UUID, userId: UUID): JournalEntryResponse? = journalRepository
+        .findById(journalEntryId = journalEntryId, userId = userId)
+        ?.let { JournalEntryResponse.fromJournalEntry(it) }
 
     fun getBetween(
         startDate: LocalDateTime,
         endDate: LocalDateTime,
         userId: UUID,
-    ): List<JournalEntry> = journalRepository.getBetween(
-        startDate = startDate,
-        endDate = endDate,
-        userId = userId,
-    )
+    ): List<JournalEntryResponse> = journalRepository
+        .getBetween(startDate = startDate, endDate = endDate, userId = userId)
+        .map { JournalEntryResponse.fromJournalEntry(it) }
 
-    fun save(request: JournalEntryRequest, userId: UUID): JournalEntry {
+    fun save(request: JournalEntryRequest, userId: UUID): JournalEntryResponse {
         val foodId = UUID.fromString(request.food)
         val food = foodRepository.findById(foodId = foodId, userId = userId)
         requireNotNull(food)
@@ -41,7 +41,8 @@ class JournalService(
             food = food,
         )
 
-        return journalRepository.insert(journalEntry = journalEntry, userId = userId)
+        val newJournalEntry = journalRepository.insert(journalEntry = journalEntry, userId = userId)
+        return JournalEntryResponse.fromJournalEntry(newJournalEntry)
     }
 
     fun delete(journalEntryId: UUID, userId: UUID) {
@@ -52,7 +53,7 @@ class JournalService(
         startDate: LocalDateTime,
         endDate: LocalDateTime,
         userId: UUID,
-    ): JournalSummary {
+    ): JournalSummaryResponse {
         val journal = journalRepository.getBetween(
             startDate = startDate,
             endDate = endDate,
@@ -67,7 +68,7 @@ class JournalService(
         val caloriesFromProteins = totalProteins * 4
         val caloriesFromFats = totalFats * 9
 
-        return JournalSummary(
+        val summary = JournalSummary(
             journal = journal,
             totalCarbs = totalCarbs,
             totalProteins = totalProteins,
@@ -77,5 +78,7 @@ class JournalService(
             caloriesFromFats = caloriesFromFats,
             totalCalories = caloriesFromCarbs + caloriesFromProteins + caloriesFromFats,
         )
+
+        return JournalSummaryResponse.fromJournalSummary(journalSummary = summary)
     }
 }
