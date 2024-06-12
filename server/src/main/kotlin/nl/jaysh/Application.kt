@@ -1,11 +1,12 @@
 package nl.jaysh
 
-import Greeting
 import io.ktor.server.application.*
 import io.ktor.server.cio.EngineMain
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
 import nl.jaysh.core.DatabaseFactory
+import nl.jaysh.plugins.configureKoin
+import nl.jaysh.plugins.configureMonitoring
+import nl.jaysh.plugins.configureRouting
+import nl.jaysh.plugins.configureSerialization
 
 fun main(args: Array<String>) {
     EngineMain.main(args)
@@ -13,10 +14,8 @@ fun main(args: Array<String>) {
 
 fun Application.module() {
     DatabaseFactory.init()
-
-    routing {
-        get("/") {
-            call.respondText("Ktor: ${Greeting().greet()}")
-        }
-    }
+    configureKoin()
+    configureMonitoring()
+    configureSerialization()
+    configureRouting()
 }
