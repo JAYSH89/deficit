@@ -24,7 +24,6 @@ dependencies {
 
     implementation(libs.logback)
     implementation(libs.bcrypt)
-    implementation(libs.kotlinx.serialization)
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.datetime)
 
