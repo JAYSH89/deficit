@@ -1,7 +1,6 @@
 package nl.jaysh.data.db
 
 import models.user.User
-import org.jetbrains.exposed.dao.id.LongIdTable
 import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ResultRow
