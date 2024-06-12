@@ -1,7 +1,7 @@
 package models.user
 
 data class User(
-    val id: Long,
+    val id: String,
     val email: String,
     val password: String,
 )

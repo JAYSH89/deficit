@@ -3,14 +3,15 @@ package nl.jaysh.data.db
 import models.AmountType
 import models.food.Food
 import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.LongIdTable
+import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.javatime.datetime
 import java.time.LocalDateTime
+import java.util.UUID
 
-object FoodTable : LongIdTable(name = "food") {
+object FoodTable : UUIDTable(name = "food") {
     val name: Column<String> = varchar(name = "name", length = 100)
     val carbs: Column<Double> = double(name = "carbs")
     val proteins: Column<Double> = double(name = "proteins")
@@ -20,7 +21,7 @@ object FoodTable : LongIdTable(name = "food") {
     val createdAt: Column<LocalDateTime?> = datetime(name = "created_at").nullable()
     val updatedAt: Column<LocalDateTime?> = datetime(name = "updated_at").nullable()
 
-    val user: Column<EntityID<Long>> = reference(
+    val user: Column<EntityID<UUID>> = reference(
         name = "user_id",
         refColumn = UserTable.id,
         onDelete = ReferenceOption.CASCADE,
@@ -28,7 +29,7 @@ object FoodTable : LongIdTable(name = "food") {
 }
 
 fun ResultRow.toFood() = Food(
-    id = this[FoodTable.id].value,
+    id = this[FoodTable.id].value.toString(),
     name = this[FoodTable.name],
     carbs = this[FoodTable.carbs],
     proteins = this[FoodTable.proteins],

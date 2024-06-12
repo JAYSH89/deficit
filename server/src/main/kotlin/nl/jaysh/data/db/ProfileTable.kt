@@ -11,6 +11,7 @@ import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.datetime
 import java.time.LocalDateTime
+import java.util.UUID
 
 object ProfileTable : Table(name = "profile") {
     val firstName: Column<String?> = varchar(name = "first_name", length = 50).nullable()
@@ -20,7 +21,7 @@ object ProfileTable : Table(name = "profile") {
     val gender: Column<String> = varchar(name = "gender", length = 50)
     val activityFactor: Column<String> = varchar(name = "gender", length = 50)
 
-    val user: Column<EntityID<Long>> = reference(
+    val user: Column<EntityID<UUID>> = reference(
         name = "user_id",
         refColumn = UserTable.id,
         onDelete = ReferenceOption.CASCADE,

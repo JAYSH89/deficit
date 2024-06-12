@@ -10,6 +10,7 @@ import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.datetime
 import java.time.LocalDateTime
+import java.util.UUID
 
 
 object TokenTable : Table(name = "refresh_token") {
@@ -17,7 +18,7 @@ object TokenTable : Table(name = "refresh_token") {
     val issuedAt: Column<LocalDateTime> = datetime(name = "issued_at")
     val expiresAt: Column<LocalDateTime> = datetime(name = "expires_at")
 
-    val user: Column<EntityID<Long>> = reference(
+    val user: Column<EntityID<UUID>> = reference(
         name = "user_id",
         refColumn = UserTable.id,
         onDelete = ReferenceOption.CASCADE,
