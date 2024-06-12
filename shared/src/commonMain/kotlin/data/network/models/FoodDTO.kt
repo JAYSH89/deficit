@@ -1,7 +1,6 @@
 package data.network.models
 
 import data.serializers.AmountTypeSerializer
-import data.serializers.GenderSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import models.AmountType
