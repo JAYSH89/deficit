@@ -32,7 +32,16 @@ data class UserProfileRequest(
     @SerialName("activity_factor")
     @Serializable(with = ActivityFactorSerializer::class)
     val activityFactor: ActivityFactor,
-)
+) {
+    fun toUserProfile(): UserProfile = UserProfile(
+        firstName = firstName,
+        lastName = lastName,
+        dateOfBirth = dateOfBirth,
+        height = height,
+        gender = gender,
+        activityFactor = activityFactor,
+    )
+}
 
 @Serializable
 data class UserProfileResponse(
@@ -57,15 +66,6 @@ data class UserProfileResponse(
     @Serializable(with = ActivityFactorSerializer::class)
     val activityFactor: ActivityFactor,
 ) {
-    fun toUserProfile(): UserProfile = UserProfile(
-        firstName = firstName,
-        lastName = lastName,
-        dateOfBirth = dateOfBirth,
-        height = height,
-        gender = gender,
-        activityFactor = activityFactor,
-    )
-
     companion object {
         fun fromUserProfile(userProfile: UserProfile): UserProfileResponse = UserProfileResponse(
             firstName = userProfile.firstName,

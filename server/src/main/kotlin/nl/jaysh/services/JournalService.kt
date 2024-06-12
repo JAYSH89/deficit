@@ -3,7 +3,6 @@ package nl.jaysh.services
 import data.network.models.JournalEntryRequest
 import data.network.models.JournalEntryResponse
 import data.network.models.JournalSummaryResponse
-import models.journal.JournalEntry
 import models.journal.JournalSummary
 import nl.jaysh.data.repository.FoodRepository
 import nl.jaysh.data.repository.JournalRepository
@@ -35,13 +34,11 @@ class JournalService(
         val food = foodRepository.findById(foodId = foodId, userId = userId)
         requireNotNull(food)
 
-        val journalEntry = JournalEntry(
-            date = request.date,
-            amount = request.amount,
-            food = food,
+        val newJournalEntry = journalRepository.insert(
+            journalEntry = request.toJournalEntry(food = food),
+            userId = userId,
         )
 
-        val newJournalEntry = journalRepository.insert(journalEntry = journalEntry, userId = userId)
         return JournalEntryResponse.fromJournalEntry(newJournalEntry)
     }
 

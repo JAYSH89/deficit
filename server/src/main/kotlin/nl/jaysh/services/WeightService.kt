@@ -2,7 +2,6 @@ package nl.jaysh.services
 
 import data.network.models.WeightRequest
 import data.network.models.WeightResponse
-import models.weight.Weight
 import nl.jaysh.data.repository.WeightRepository
 import java.util.UUID
 

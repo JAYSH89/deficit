@@ -4,6 +4,7 @@ import data.serializers.LocalDateTimeSerializer
 import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import models.food.Food
 import models.journal.JournalEntry
 
 @Serializable
@@ -17,7 +18,13 @@ data class JournalEntryRequest(
 
     @SerialName("food")
     val food: String,
-)
+) {
+    fun toJournalEntry(food: Food): JournalEntry = JournalEntry(
+        date = date,
+        amount = amount,
+        food = food,
+    )
+}
 
 @Serializable
 data class JournalEntryResponse(
