@@ -1,0 +1,31 @@
+CREATE TABLE foodEntity (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    carbs REAL NOT NULL,
+    proteins REAL NOT NULL,
+    fats REAL NOT NULL,
+    calories REAL NOT NULL,
+    amount REAL NOT NULL,
+    amount_type TEXT NOT NULL
+);
+
+insertFood:
+INSERT INTO foodEntity (name, carbs, proteins, fats, calories, amount, amount_type)
+VALUES (?, ?, ?, ?, ?, ?, ?);
+
+getAllFoods:
+SELECT * FROM foodEntity;
+
+getFoodById:
+SELECT * FROM foodEntity WHERE id = ?;
+
+updateFood:
+UPDATE foodEntity
+SET name = ?, carbs = ?, proteins = ?, fats = ?, calories = ?, amount = ?, amount_type = ?
+WHERE id = ?;
+
+deleteFoodById:
+DELETE FROM foodEntity WHERE id = ?;
+
+deleteAllFoods:
+DELETE FROM foodEntity;
