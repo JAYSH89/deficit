@@ -1,5 +1,6 @@
 package core.di
 
+import feature.food.data.datasource.FakeFoodDataSource
 import feature.food.data.datasource.FoodDataSourceImpl
 import feature.food.data.datasource.FoodDatasource
 import feature.food.data.repository.FoodRepositoryImpl
@@ -12,6 +13,8 @@ import org.koin.dsl.module
 expect val platformModule: Module
 
 val sharedModule = module {
-    singleOf(::FoodDataSourceImpl).bind<FoodDatasource>()
+    single<DispatcherProvider> { DefaultDispatcherProvider() }
+    singleOf(::FakeFoodDataSource).bind<FoodDatasource>()
+//    singleOf(::FoodDataSourceImpl).bind<FoodDatasource>()
     singleOf(::FoodRepositoryImpl).bind<FoodRepository>()
 }

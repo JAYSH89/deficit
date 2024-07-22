@@ -1,6 +1,8 @@
+import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -13,10 +15,32 @@ plugins {
 }
 
 kotlin {
+    // https://youtrack.jetbrains.com/issue/KT-61573
+    targets.configureEach {
+        compilations.configureEach {
+            compileTaskProvider.configure {
+                compilerOptions {
+                    freeCompilerArgs.add("-Xexpect-actual-classes")
+                }
+            }
+        }
+    }
+
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
+        }
+
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        instrumentedTestVariant {
+            sourceSetTree.set(KotlinSourceSetTree.test)
+
+            dependencies {
+                implementation(libs.core.ktx)
+                implementation(libs.compose.ui.test.junit4.android)
+                debugImplementation(libs.compose.ui.test.manifest)
+            }
         }
     }
 
@@ -58,6 +82,7 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
             implementation(libs.navigation.compose)
             implementation(libs.lifecycle.viewmodel)
             implementation(libs.kotlinx.coroutines.core)
@@ -70,6 +95,18 @@ kotlin {
 
             api(libs.napier)
             api(libs.kotlinx.datetime)
+        }
+
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(kotlin("test-annotations-common"))
+            implementation(libs.assertk)
+            implementation(libs.turbine)
+            implementation(libs.koin.test)
+
+            @OptIn(ExperimentalComposeLibrary::class)
+            implementation(compose.uiTest)
         }
 
         desktopMain.dependencies {

@@ -2,6 +2,8 @@ package feature.food.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import core.di.DefaultDispatcherProvider
+import core.di.DispatcherProvider
 import core.model.food.AmountType
 import core.model.food.Food
 import feature.food.domain.FoodRepository
@@ -16,7 +18,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 
-class FoodViewModel(private val repository: FoodRepository) : ViewModel() {
+class FoodViewModel(
+    private val repository: FoodRepository,
+    private val dispatcherProvider: DispatcherProvider,
+) : ViewModel() {
 
     private val _state = MutableStateFlow(FoodViewModelState())
     val state: StateFlow<FoodViewModelState> = _state
@@ -29,7 +34,7 @@ class FoodViewModel(private val repository: FoodRepository) : ViewModel() {
         when (event) {
             is FoodViewModelEvent.SaveFood -> insertFood(food = event)
             FoodViewModelEvent.GetFood -> getFood()
-            FoodViewModelEvent.ToggleFoodDialog -> showAddFoodDialog()
+            FoodViewModelEvent.ToggleFoodDialog -> toggleFoodDialogVisible()
             is FoodViewModelEvent.DeleteFood -> deleteFood(id = event.id)
         }
     }
@@ -45,19 +50,19 @@ class FoodViewModel(private val repository: FoodRepository) : ViewModel() {
     private fun insertFood(food: FoodViewModelEvent.SaveFood) {
         val newFood = food.toFood() ?: return
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcherProvider.io) {
             repository.insertFood(food = newFood)
             _state.update { it.copy(dialogVisible = false) }
         }
     }
 
     private fun deleteFood(id: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcherProvider.io) {
             repository.deleteFoodById(id = id)
         }
     }
 
-    private fun showAddFoodDialog() {
+    private fun toggleFoodDialogVisible() {
         val dialogVisible = state.value.dialogVisible
         _state.update { it.copy(dialogVisible = !dialogVisible) }
     }
