@@ -1,0 +1,24 @@
+CREATE TABLE foodEntity (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    carbs REAL NOT NULL,
+    proteins REAL NOT NULL,
+    fats REAL NOT NULL,
+    calories REAL NOT NULL,
+    amount REAL NOT NULL,
+    amount_type TEXT NOT NULL
+);
+
+CREATE TABLE journalEntity (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    food_id INTEGER NOT NULL,
+    amount REAL NOT NULL,
+    date TEXT NOT NULL,
+    FOREIGN KEY (food_id) REFERENCES foodEntity(id) ON DELETE CASCADE
+);
+
+CREATE TABLE weightEntity (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    weight REAL NOT NULL,
+    date TEXT NOT NULL
+);

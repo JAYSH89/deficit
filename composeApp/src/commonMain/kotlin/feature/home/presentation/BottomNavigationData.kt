@@ -20,13 +20,13 @@ sealed class BottomNavigationData(
     )
 
     data object Food : BottomNavigationData(
-        route = Destination.FOOD,
+        route = Destination.FOOD_OVERVIEW,
         title = "Food",
         icon = Res.drawable.buy,
     )
 
     data object Journal : BottomNavigationData(
-        route = Destination.JOURNAL,
+        route = Destination.JOURNAL_OVERVIEW,
         title = "Journal",
         icon = Res.drawable.chart,
     )

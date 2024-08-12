@@ -1,5 +1,5 @@
 package core.model.food
 
 enum class AmountType {
-    PIECE, WEIGHT, VOLUME
+    PIECE, GRAM, ML
 }

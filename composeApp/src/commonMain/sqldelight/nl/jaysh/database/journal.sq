@@ -1,0 +1,66 @@
+insertJournal:
+INSERT INTO journalEntity(food_id, amount, date)
+VALUES (?, ?, ?);
+
+getAllJournals:
+SELECT journalEntity.id AS journal_id,
+       journalEntity.food_id,
+       journalEntity.amount AS journal_amount,
+       journalEntity.date AS journal_date,
+       foodEntity.id AS food_id,
+       foodEntity.name AS food_name,
+       foodEntity.carbs AS food_carbs,
+       foodEntity.proteins AS food_proteins,
+       foodEntity.fats AS food_fats,
+       foodEntity.calories AS food_calories,
+       foodEntity.amount AS food_amount,
+       foodEntity.amount_type AS food_amount_type
+FROM journalEntity
+JOIN foodEntity ON journalEntity.food_id = foodEntity.id
+ORDER BY journalEntity.date ASC;
+
+getJournalById:
+SELECT journalEntity.id AS journal_id,
+       journalEntity.food_id,
+       journalEntity.amount AS journal_amount,
+       journalEntity.date AS journal_date,
+       foodEntity.id AS food_id,
+       foodEntity.name AS food_name,
+       foodEntity.carbs AS food_carbs,
+       foodEntity.proteins AS food_proteins,
+       foodEntity.fats AS food_fats,
+       foodEntity.calories AS food_calories,
+       foodEntity.amount AS food_amount,
+       foodEntity.amount_type AS food_amount_type
+FROM journalEntity
+JOIN foodEntity ON journalEntity.food_id = foodEntity.id
+WHERE journalEntity.id = ?;
+
+getJournalByDateRange:
+SELECT journalEntity.id AS journal_id,
+       journalEntity.food_id,
+       journalEntity.amount AS journal_amount,
+       journalEntity.date AS journal_date,
+       foodEntity.id AS food_id,
+       foodEntity.name AS food_name,
+       foodEntity.carbs AS food_carbs,
+       foodEntity.proteins AS food_proteins,
+       foodEntity.fats AS food_fats,
+       foodEntity.calories AS food_calories,
+       foodEntity.amount AS food_amount,
+       foodEntity.amount_type AS food_amount_type
+FROM journalEntity
+JOIN foodEntity ON journalEntity.food_id = foodEntity.id
+WHERE journalEntity.date BETWEEN ? AND ?
+ORDER BY journalEntity.date ASC;
+
+updateJournal:
+UPDATE journalEntity
+SET food_id = ?, amount = ?, date = ?
+WHERE id = ?;
+
+deleteJournal:
+DELETE FROM journalEntity WHERE id = ?;
+
+deleteAllJournal:
+DELETE FROM journalEntity;

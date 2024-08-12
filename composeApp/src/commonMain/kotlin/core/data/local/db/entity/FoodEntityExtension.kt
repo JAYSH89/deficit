@@ -2,7 +2,7 @@ package core.data.local.db.entity
 
 import core.model.food.AmountType
 import core.model.food.Food
-import nl.jaysh.database.FoodEntity
+import migrations.FoodEntity
 
 fun FoodEntity.toFood(): Food = Food(
     id = this.id,

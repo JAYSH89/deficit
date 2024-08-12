@@ -29,18 +29,12 @@ kotlin {
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+            jvmTarget.set(JvmTarget.JVM_17)
         }
 
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         instrumentedTestVariant {
             sourceSetTree.set(KotlinSourceSetTree.test)
-
-            dependencies {
-                implementation(libs.core.ktx)
-                implementation(libs.compose.ui.test.junit4.android)
-                debugImplementation(libs.compose.ui.test.manifest)
-            }
         }
     }
 
@@ -76,9 +70,11 @@ kotlin {
         }
 
         commonMain.dependencies {
+            implementation(libs.kotlin.stdlib)
+            implementation(libs.kotlinx.atomicfu)
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material)
+            implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
@@ -93,8 +89,10 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
 
-            api(libs.napier)
+            api(libs.androidx.datastore.preferences.core)
+            api(libs.androidx.datastore.core.okio)
             api(libs.kotlinx.datetime)
+            api(libs.napier)
         }
 
         commonTest.dependencies {
@@ -145,8 +143,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     buildFeatures {
@@ -174,6 +172,8 @@ sqldelight {
     databases {
         create("Database") {
             packageName.set("nl.jaysh.database")
+            deriveSchemaFromMigrations = true
+            verifyMigrations = true
         }
     }
 }

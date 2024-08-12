@@ -3,9 +3,11 @@ package feature.food.presentation
 import app.cash.turbine.test
 import core.model.food.AmountType
 import core.model.food.Food
-import feature.food.data.datasource.FakeFoodDataSource
-import feature.food.data.repository.FoodRepositoryImpl
-import feature.food.domain.FoodRepository
+import core.data.local.db.datasource.food.FakeFoodDataSource
+import core.data.repository.FoodRepositoryImpl
+import core.data.repository.FoodRepository
+import feature.food.FoodOverviewViewModel
+import feature.food.FoodOverviewViewModelEvent
 import helpers.TestDispatcherProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -20,7 +22,7 @@ class FoodViewModelTest {
 
     private lateinit var dataSource: FakeFoodDataSource
     private lateinit var repository: FoodRepository
-    private lateinit var viewModel: FoodViewModel
+    private lateinit var viewModel: FoodOverviewViewModel
     private lateinit var testDispatcherProvider: TestDispatcherProvider
 
     private val egg = Food(
@@ -39,9 +41,9 @@ class FoodViewModelTest {
         testDispatcherProvider = TestDispatcherProvider()
         dataSource = FakeFoodDataSource()
         repository = FoodRepositoryImpl(datasource = dataSource)
-        viewModel = FoodViewModel(
+        viewModel = FoodOverviewViewModel(
             repository = repository,
-            dispatcherProvider = testDispatcherProvider,
+            dispatcher = testDispatcherProvider,
         )
     }
 
@@ -75,7 +77,7 @@ class FoodViewModelTest {
 
     @Test
     fun `save Food should add and refresh list of foods`() = runTest {
-        val event = FoodViewModelEvent.SaveFood(
+        val event = FoodOverviewViewModelEvent.SaveFood(
             name = "Example",
             carbs = "1.0",
             proteins = "1.0",
@@ -106,7 +108,7 @@ class FoodViewModelTest {
 
     @Test
     fun `delete Food should remove Food from list of foods`() = runTest {
-        val event = FoodViewModelEvent.DeleteFood(id = egg.id ?: 1)
+        val event = FoodOverviewViewModelEvent.DeleteFood(id = egg.id ?: 1)
 
         viewModel.onEvent(event)
         advanceUntilIdle()
@@ -119,7 +121,7 @@ class FoodViewModelTest {
 
     @Test
     fun `toggleFoodDialog should show set dialog visible`() = runTest {
-        val event = FoodViewModelEvent.ToggleFoodDialog
+        val event = FoodOverviewViewModelEvent.ToggleFoodDialog
 
         viewModel.onEvent(event)
         advanceUntilIdle()

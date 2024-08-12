@@ -1,14 +1,3 @@
-CREATE TABLE foodEntity (
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    carbs REAL NOT NULL,
-    proteins REAL NOT NULL,
-    fats REAL NOT NULL,
-    calories REAL NOT NULL,
-    amount REAL NOT NULL,
-    amount_type TEXT NOT NULL
-);
-
 insertFood:
 INSERT INTO foodEntity (name, carbs, proteins, fats, calories, amount, amount_type)
 VALUES (?, ?, ?, ?, ?, ?, ?);
