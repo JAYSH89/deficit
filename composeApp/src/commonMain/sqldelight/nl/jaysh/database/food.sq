@@ -1,0 +1,20 @@
+insertFood:
+INSERT INTO foodEntity (name, carbs, proteins, fats, calories, amount, amount_type)
+VALUES (?, ?, ?, ?, ?, ?, ?);
+
+getAllFoods:
+SELECT * FROM foodEntity;
+
+getFoodById:
+SELECT * FROM foodEntity WHERE id = ?;
+
+updateFood:
+UPDATE foodEntity
+SET name = ?, carbs = ?, proteins = ?, fats = ?, calories = ?, amount = ?, amount_type = ?
+WHERE id = ?;
+
+deleteFoodById:
+DELETE FROM foodEntity WHERE id = ?;
+
+deleteAllFoods:
+DELETE FROM foodEntity;

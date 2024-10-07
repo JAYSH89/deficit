@@ -1,0 +1,31 @@
+insertWeight:
+INSERT INTO weightEntity(weight, date)
+VALUES (?, ?);
+
+getAllWeights:
+SELECT * FROM weightEntity;
+
+getWeightById:
+SELECT * FROM weightEntity
+WHERE id = ?;
+
+getWeightByDateRange:
+SELECT * FROM weightEntity
+WHERE weightEntity.date BETWEEN ? AND ?
+ORDER BY weightEntity.date ASC;
+
+getLatestWeight:
+SELECT * FROM weightEntity
+ORDER BY date DESC
+LIMIT 1;
+
+updateWeight:
+UPDATE weightEntity
+SET weight = ?, date = ?
+WHERE id = ?;
+
+deleteWeightById:
+DELETE FROM weightEntity WHERE id = ?;
+
+deleteAllWeight:
+DELETE FROM weightEntity;
